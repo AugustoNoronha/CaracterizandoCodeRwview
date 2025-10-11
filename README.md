@@ -48,6 +48,5 @@ Baseado na literatura sobre *code review* e na experiência prática, formulamos
 
 Este relatório inicial descreve a abordagem que será adotada para analisar o processo de *code review* em repositórios populares do GitHub. A metodologia definida visa permitir uma análise robusta das variáveis que influenciam tanto o feedback final das revisões quanto o número de revisões realizadas. Com base nas hipóteses formuladas, esperamos obter insights valiosos sobre o impacto de características específicas dos PRs no processo de avaliação.
 
-A próxima etapa envolverá a coleta dos dados e a aplicação de técnicas estatísticas para testar as hipóteses apresentadas. Este relatório será expandido à medida que os resultados forem obtidos e analisados.
-
 ---
+
