@@ -7,7 +7,7 @@ from tqdm import tqdm
 from datetime import datetime
 
 # === CONFIGURAÇÕES ===
-TOKEN = os.getenv("GITHUB_TOKEN") or ""
+TOKEN = os.getenv("GITHUB_TOKEN") or "SEU_TOKEN_AQUI"
 HEADERS = {"Authorization": f"token {TOKEN}", "Accept": "application/vnd.github.v3+json"}
 
 REPOS_FILE = "popular_repos_list.txt"
@@ -16,10 +16,10 @@ CHECKPOINT_FILE = "checkpoint_prs.txt"
 LOG_FILE = "coleta_prs.log"
 
 MAX_REPOS = 200
-MAX_PRS_POR_REPO = 500
+MAX_PRS_POR_REPO = 100  # limite para acelerar a coleta
 MIN_REVIEW_HOURS = 1
-PER_PAGE = 100
-DELAY = 1.5  # segundos entre requisições
+PER_PAGE = 50
+DELAY = 1.0  # segundos entre requisições
 
 
 def log(msg):
@@ -81,12 +81,18 @@ def main():
         repos = [line.strip() for line in f if line.strip()]
     repos = repos[:MAX_REPOS]
 
+    # --- Ajuste solicitado ---
     ultimo_repo = carregar_checkpoint()
     if ultimo_repo and ultimo_repo in repos:
-        start_index = repos.index(ultimo_repo)
-        log(f"Retomando coleta a partir de: {ultimo_repo}")
+        start_index = repos.index(ultimo_repo) + 1  # pula o último repo processado
+        if start_index >= len(repos):
+            log("Todos os repositórios já foram processados.")
+            return
+        log(f"Retomando coleta a partir do próximo após {ultimo_repo}: {repos[start_index]}")
     else:
         start_index = 0
+        log("Iniciando coleta do início.")
+    # --------------------------
 
     mode = "a" if os.path.exists(OUTPUT_FILE) else "w"
     with open(OUTPUT_FILE, mode, newline="", encoding="utf-8") as csvfile:
@@ -111,7 +117,7 @@ def main():
             total_processados = 0
 
             with tqdm(total=MAX_PRS_POR_REPO, desc=f"{repo}", unit="PR", leave=False) as pbar:
-                while True:
+                while total_processados < MAX_PRS_POR_REPO:
                     url = f"https://api.github.com/repos/{repo}/pulls"
                     params = {"state": "closed", "per_page": PER_PAGE, "page": page}
                     prs = fetch_json(url, params)
@@ -180,7 +186,7 @@ def main():
                     page += 1
                     time.sleep(DELAY)
 
-            log(f"{total_processados} PRs processados para {repo}")
+            log(f"{total_processados} PRs válidos coletados de {repo}")
             csvfile.flush()
             time.sleep(DELAY)
 
