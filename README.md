@@ -96,27 +96,33 @@ As análises estatísticas e correlações foram calculadas com o coeficiente de
 
 ## Visualizações
 
-A seguir estão as três principais representações gráficas utilizadas na análise, cobrindo diferentes perspectivas das relações entre variáveis.
+A seguir estão as representações gráficas utilizadas para apoiar a interpretação dos resultados obtidos.
 
 ### 1. Mapa de Calor — Correlação Geral entre Métricas
-O mapa de calor mostra como cada métrica se relaciona com as demais de forma quantitativa.  
-Cores mais quentes representam correlações positivas, enquanto cores frias representam correlações negativas.
+Mostra as relações entre todas as métricas do dataset, permitindo identificar tendências de associação positiva e negativa.
 
 ![Mapa de Calor - Correlação Geral](heatmap_geral.png)
 
 ---
 
 ### 2. Gráfico de Densidade Hexbin — Linhas Adicionadas x Número de Revisões
-Este gráfico mostra a concentração de PRs com base em duas variáveis numéricas, permitindo identificar zonas com maior frequência de valores combinados.
+Evidencia a concentração de PRs com maior densidade de revisões, representando graficamente a intensidade das combinações entre variáveis.
 
 ![Hexbin - Linhas Adicionadas x Revisões](hexmap_additions_reviews.png)
 
 ---
 
 ### 3. Boxplot — Distribuição do Tempo de Análise por Status do PR
-O boxplot ajuda a visualizar a variação do tempo de análise entre PRs aceitos (merged) e PRs fechados (closed).
+Permite observar a dispersão e mediana do tempo de análise entre PRs aceitos (merged) e rejeitados (closed).
 
 ![Boxplot - Tempo de Análise por Status](grafico_tempo_status.png)
+
+---
+
+### 4. Gráfico de Dispersão — Descrição x Número de Revisões
+Complementa os demais gráficos ao mostrar a distribuição individual dos PRs, reforçando o padrão observado de leve correlação positiva.
+
+![Scatterplot - Descrição x Revisões](grafico_descricao_reviews.png)
 
 ---
 
