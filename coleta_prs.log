@@ -445,3 +445,4 @@
 [2025-10-10 23:09:30] [200/200] Coletando PRs de ansible/ansible...
 [2025-10-10 23:16:54] 100 PRs válidos coletados de ansible/ansible
 [2025-10-10 23:16:55] Coleta concluída. Dataset salvo em dataset_prs_lab03s01.csv
+[2025-10-16 09:21:55] Todos os repositórios já foram processados.

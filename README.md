@@ -1,52 +1,152 @@
-# Relatório Inicial - Análise de Code Review em Repositórios Populares no GitHub
+# Laboratório 03 — Caracterizando a Atividade de Code Review no GitHub
 
-## Introdução
+## Introdução e Contextualização
 
-A prática de *code review* tem se consolidado como um componente crucial nos processos de desenvolvimento ágil, com destaque para projetos de código aberto hospedados em plataformas como o GitHub. Ao realizar a análise de Pull Requests (PRs), revisores e desenvolvedores buscam garantir que o código proposto seja de alta qualidade, esteja alinhado com os padrões do projeto e livre de defeitos.
+A prática de code review é essencial em projetos de software colaborativos, pois permite a detecção precoce de defeitos e a disseminação de conhecimento entre os desenvolvedores.  
+Neste laboratório, o objetivo é analisar a atividade de code review em repositórios populares do GitHub, buscando entender quais fatores influenciam o resultado (merge ou close) e o número de revisões realizadas em Pull Requests (PRs).
 
-No contexto do GitHub, o processo de revisão ocorre por meio de PRs, onde os desenvolvedores submetem suas modificações para avaliação antes de serem integradas à base de código principal. Um dos principais objetivos deste laboratório é explorar como diferentes características dos PRs podem influenciar o feedback final das revisões (aceitação ou rejeição) e a quantidade de revisões realizadas. A análise será baseada em dados extraídos dos 200 repositórios mais populares do GitHub, com foco nos PRs que passaram por revisões manuais (e não automáticas via bots ou ferramentas de CI/CD).
+O dataset analisado foi obtido a partir de PRs coletados de múltiplos repositórios públicos e inclui métricas relacionadas ao tamanho do PR, tempo de análise, descrição e nível de interação entre participantes.
 
-Este relatório visa introduzir as hipóteses iniciais para a análise de variáveis que influenciam o processo de *code review*, antes de coletarmos e analisarmos os dados.
-
-## Metodologia
-
-Para abordar as questões de pesquisa propostas, adotamos a seguinte metodologia:
-
-1. **Seleção dos Repositórios**  
-   A coleta de dados será realizada a partir dos 200 repositórios mais populares no GitHub, selecionados com base no número de estrelas e contribuições ativas. Além disso, apenas repositórios com pelo menos 100 PRs serão considerados.
-
-2. **Definição das Métricas**  
-   As métricas que serão analisadas incluem:
-   - **Tamanho do PR**: número de arquivos modificados e total de linhas adicionadas ou removidas.
-   - **Tempo de Análise**: tempo entre a criação do PR e o fechamento ou merge.
-   - **Descrição do PR**: comprimento da descrição do PR em número de caracteres.
-   - **Interações**: número de participantes no PR e total de comentários feitos.
-
-3. **Seleção dos PRs**  
-   Serão selecionados apenas PRs que possuam status "MERGED" ou "CLOSED" e que tenham sido revisados por pelo menos um colaborador (com base no campo `review`). Além disso, será considerado um critério de tempo mínimo para garantir que a revisão não tenha sido automatizada, ou seja, PRs com uma diferença superior a uma hora entre a criação e o merge/close.
-
-4. **Testes Estatísticos**  
-   A análise de correlação será realizada para identificar relações entre as variáveis. Testes de correlação de **Spearman** ou **Pearson** serão aplicados, dependendo da distribuição dos dados. O teste de **Spearman** será preferido caso as variáveis não apresentem uma relação linear ou se os dados não forem normalmente distribuídos.
-
-## Hipóteses Iniciais
-
-Baseado na literatura sobre *code review* e na experiência prática, formulamos as seguintes hipóteses iniciais, que serão testadas após a coleta e análise dos dados:
-
-1. **Tamanho do PR e Resultado Final**  
-   **Hipótese**: PRs maiores (com mais arquivos modificados e mais linhas de código alteradas) têm maior probabilidade de serem rejeitados ou fechados sem merge. Isso pode ocorrer devido à maior complexidade de análise e ao aumento da probabilidade de erros ou conflitos durante a revisão.
-
-2. **Tempo de Análise e Número de Revisões**  
-   **Hipótese**: PRs que permanecem abertos por mais tempo tendem a passar por um número maior de revisões, indicando uma maior complexidade na avaliação ou a necessidade de ajustes adicionais após feedbacks iniciais.
-
-3. **Descrição do PR e Aceitação**  
-   **Hipótese**: PRs com descrições mais completas e detalhadas (maior número de caracteres) têm maior chance de serem aceitos. Uma descrição clara e bem estruturada facilita a compreensão das alterações propostas e pode influenciar positivamente os revisores.
-
-4. **Interações e Número de Revisões**  
-   **Hipótese**: PRs com um número maior de participantes e comentários provavelmente passarão por mais revisões. O aumento das interações sugere um processo de revisão mais colaborativo, que pode demandar ajustes contínuos antes da aceitação final.
-
-## Considerações Finais
-
-Este relatório inicial descreve a abordagem que será adotada para analisar o processo de *code review* em repositórios populares do GitHub. A metodologia definida visa permitir uma análise robusta das variáveis que influenciam tanto o feedback final das revisões quanto o número de revisões realizadas. Com base nas hipóteses formuladas, esperamos obter insights valiosos sobre o impacto de características específicas dos PRs no processo de avaliação.
+As análises estatísticas e correlações foram calculadas com o coeficiente de Spearman, permitindo avaliar tendências monotônicas entre as variáveis sem assumir linearidade.
 
 ---
 
+## Questões de Pesquisa e Hipóteses
+
+### Dimensão A — Feedback Final das Revisões (Status do PR)
+
+| Questão | Descrição | Hipótese |
+|----------|------------|-----------|
+| RQ01 | Qual a relação entre o tamanho dos PRs e o feedback final das revisões? | PRs maiores (mais arquivos e linhas alteradas) tendem a ser menos aceitos (merge) devido à maior complexidade e risco de falhas. |
+| RQ02 | Qual a relação entre o tempo de análise dos PRs e o feedback final das revisões? | PRs que permanecem mais tempo em revisão têm menor probabilidade de serem aprovados, indicando possíveis dificuldades de entendimento ou desacordo entre revisores. |
+| RQ03 | Qual a relação entre a descrição dos PRs e o feedback final das revisões? | PRs com descrições mais detalhadas tendem a ser mais aceitos, pois facilitam o entendimento do revisor. |
+| RQ04 | Qual a relação entre as interações nos PRs e o feedback final das revisões? | PRs com mais interações (comentários e participantes) podem ter maior chance de rejeição, já que discussões extensas podem indicar controvérsias. |
+
+---
+
+### Dimensão B — Número de Revisões
+
+| Questão | Descrição | Hipótese |
+|----------|------------|-----------|
+| RQ05 | Qual a relação entre o tamanho dos PRs e o número de revisões realizadas? | PRs maiores demandam mais revisões, pois envolvem mais código e maior risco de problemas. |
+| RQ06 | Qual a relação entre o tempo de análise dos PRs e o número de revisões realizadas? | PRs com tempo de análise maior tendem a ter mais revisões, refletindo um processo de revisão mais cuidadoso. |
+| RQ07 | Qual a relação entre a descrição dos PRs e o número de revisões realizadas? | PRs com descrições mais longas podem ter menos revisões, pois já explicam adequadamente as mudanças. |
+| RQ08 | Qual a relação entre as interações nos PRs e o número de revisões realizadas? | PRs com mais interações (comentários e participantes) devem ter mais revisões, devido à colaboração e troca de feedbacks. |
+
+---
+
+## Metodologia
+
+1. **Coleta dos Dados:**  
+   - Foram extraídos PRs de repositórios populares no GitHub com pelo menos 100 PRs concluídos (merged ou closed).  
+   - Foram filtrados apenas PRs com pelo menos uma revisão e tempo de análise superior a 1 hora.
+
+2. **Métricas Consideradas:**  
+   - Tamanho: `num_files`, `additions`, `deletions`  
+   - Tempo de análise: `tempo_analise_horas`  
+   - Descrição: `descricao_chars`  
+   - Interações: `num_comments`, `num_participants`  
+   - Revisões: `review_count`  
+   - Status: `status` (1 = merged, 0 = closed)
+
+3. **Análise Estatística:**  
+   - Cálculo das medianas para caracterização geral.  
+   - Cálculo de correlações de Spearman para medir a intensidade das relações entre as variáveis e os resultados.
+
+4. **Ferramentas Utilizadas:**  
+   - Python 3.13, Pandas, Matplotlib, Seaborn, SciPy.
+
+---
+
+## Resultados Encontrados
+
+### Estatísticas Gerais (medianas)
+
+| Métrica | Mediana |
+|----------|----------|
+| Tempo de análise (h) | 94.06 |
+| Número de revisões | 2 |
+| Arquivos modificados | 2 |
+| Linhas adicionadas | 28 |
+| Linhas removidas | 4 |
+| Descrição (caracteres) | 601 |
+| Comentários | 2 |
+| Participantes | 2 |
+
+---
+
+### Correlações com o Status (Spearman)
+
+| Métrica | Correlação |
+|----------|-------------|
+| Tamanho (Arquivos) | +0.140 |
+| Tamanho (Additions) | +0.107 |
+| Tamanho (Deletions) | +0.132 |
+| Tempo de Análise (h) | −0.272 |
+| Descrição (chars) | +0.017 |
+| Interações (Comentários) | −0.108 |
+| Interações (Participantes) | −0.090 |
+
+**Interpretação:**  
+- Pequenas correlações positivas entre tamanho e status sugerem que PRs maiores não são necessariamente rejeitados.  
+- Correlação negativa entre tempo e status reforça a hipótese de que PRs demorados tendem a ser menos aceitos.  
+- Descrição quase neutra indica que o tamanho da descrição não influencia fortemente na aceitação.
+
+---
+
+## Visualizações
+
+A seguir estão as três principais representações gráficas utilizadas na análise, cobrindo diferentes perspectivas das relações entre variáveis.
+
+### 1. Mapa de Calor — Correlação Geral entre Métricas
+O mapa de calor mostra como cada métrica se relaciona com as demais de forma quantitativa.  
+Cores mais quentes representam correlações positivas, enquanto cores frias representam correlações negativas.
+
+![Mapa de Calor - Correlação Geral](heatmap_geral.png)
+
+---
+
+### 2. Gráfico de Densidade Hexbin — Linhas Adicionadas x Número de Revisões
+Este gráfico mostra a concentração de PRs com base em duas variáveis numéricas, permitindo identificar zonas com maior frequência de valores combinados.
+
+![Hexbin - Linhas Adicionadas x Revisões](hexmap_additions_reviews.png)
+
+---
+
+### 3. Boxplot — Distribuição do Tempo de Análise por Status do PR
+O boxplot ajuda a visualizar a variação do tempo de análise entre PRs aceitos (merged) e PRs fechados (closed).
+
+![Boxplot - Tempo de Análise por Status](grafico_tempo_status.png)
+
+---
+
+## Conclusão e Avaliação das Hipóteses
+
+| Questão | Hipótese Confirmada? | Observação |
+|----------|----------------------|-------------|
+| RQ01 | Parcialmente | PRs maiores mostraram leve tendência a serem aceitos, contrariando a expectativa inicial de rejeição. |
+| RQ02 | Confirmada | PRs analisados por mais tempo tiveram menor taxa de merge (correlação negativa). |
+| RQ03 | Rejeitada | O tamanho da descrição não mostrou influência significativa sobre o resultado. |
+| RQ04 | Confirmada | Mais interações correlacionam-se levemente com rejeições, sugerindo maior discussão e divergência. |
+| RQ05 | Confirmada | PRs maiores exigem mais revisões. |
+| RQ06 | Confirmada | Tempo de análise mais longo está relacionado a mais revisões. |
+| RQ07 | Rejeitada | Descrições longas não reduziram revisões; na prática, houve leve aumento. |
+| RQ08 | Confirmada | PRs com mais interações também apresentaram mais revisões. |
+
+---
+
+## Discussão
+
+Os resultados confirmam que o tamanho do PR e o tempo de análise são fatores centrais na dinâmica de code review.  
+O tamanho influencia tanto na probabilidade de merge quanto na quantidade de revisões, enquanto o tempo de análise indica maior esforço e discussão.
+
+A hipótese de que descrições mais completas facilitariam a aprovação não se confirmou, indicando que a clareza textual pode não compensar a complexidade técnica.  
+Por outro lado, a presença de mais revisores e comentários sugere processos colaborativos e criteriosos, típicos de projetos maduros.
+
+De forma geral, a análise empírica mostra que:
+- PRs pequenos e objetivos têm maior chance de serem aceitos rapidamente.  
+- PRs grandes e discutidos tendem a exigir mais revisões antes da integração.
+
+Essas evidências reforçam boas práticas conhecidas em engenharia de software: manter PRs pequenos, bem delimitados e com propósito claro melhora a eficiência do processo de revisão.
+
+---

@@ -1,0 +1,33 @@
+============================================================
+RELATÓRIO LABORATÓRIO 03 - CARACTERIZAÇÃO DE CODE REVIEW
+============================================================
+
+Resumo:
+Os gráficos de densidade (hexbin) permitem observar regiões com maior concentração de PRs.
+Isso facilita identificar padrões como:
+- Se PRs com mais linhas adicionadas recebem mais revisões;
+- Se descrições longas influenciam o número de revisões;
+- E se o tempo de análise está associado à atividade de revisão.
+
+Correlação com o Status (Spearman):
+  - Tamanho (Arquivos): 0.140
+  - Tamanho (Additions): 0.107
+  - Tamanho (Deletions): 0.132
+  - Tempo de Análise (h): -0.272
+  - Descrição (chars): 0.017
+  - Interações (Comentários): -0.108
+  - Interações (Participantes): -0.090
+
+Correlação com o Número de Revisões (Spearman):
+  - Tamanho (Arquivos): 0.317
+  - Tamanho (Additions): 0.401
+  - Tamanho (Deletions): 0.248
+  - Tempo de Análise (h): 0.093
+  - Descrição (chars): 0.105
+  - Interações (Comentários): 0.206
+  - Interações (Participantes): 0.188
+
+Gráficos gerados:
+- hexmap_additions_reviews.png
+- hexmap_tempo_reviews.png
+- hexmap_descricao_reviews.png
