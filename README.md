@@ -3,7 +3,7 @@
 ## Introdução e Contextualização
 
 A prática de code review é essencial em projetos de software colaborativos, pois permite a detecção precoce de defeitos e a disseminação de conhecimento entre os desenvolvedores.  
-Neste laboratório, o objetivo é analisar a atividade de code review em repositórios populares do GitHub, buscando entender quais fatores influenciam o resultado (merge ou close) e o número de revisões realizadas em Pull Requests (PRs).
+Neste projeto, o objetivo é analisar a atividade de code review em repositórios populares do GitHub, buscando entender quais fatores influenciam o resultado (merge ou close) e o número de revisões realizadas em Pull Requests (PRs).
 
 O dataset analisado foi obtido a partir de PRs coletados de múltiplos repositórios públicos e inclui métricas relacionadas ao tamanho do PR, tempo de análise, descrição e nível de interação entre participantes.
 
@@ -156,3 +156,4 @@ De forma geral, a análise empírica mostra que:
 Essas evidências reforçam boas práticas conhecidas em engenharia de software: manter PRs pequenos, bem delimitados e com propósito claro melhora a eficiência do processo de revisão.
 
 ---
+
